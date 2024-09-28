@@ -3,14 +3,13 @@
 @model MoviePages.Pages.IndexModel
 @{
     int i = 1;
-    var message = "welcome!";
 }
 
 
-<h1>@message</h1>
+<h1>Movies</h1>
 <hr />
 
-<a asp-page="create" class="btn btn-primary"> Movie</a>
+<a asp-page="create" class="btn btn-primary">New Movie</a>
 
 @if (Model.MovieList is null || Model.MovieList.Count == 0)
 {
@@ -48,14 +47,4 @@ else
 
 <hr />
 Total Count: @(Model.MovieList?.Count ?? 0)
-<br />
-After 2000s: @CountAfter2000s()
-
-
-@functions {
-    public int CountAfter2000s()
-    {
-        return Model.MovieList?.Count(m => m.Year > 2000) ?? 0;
-    }
-}
 
