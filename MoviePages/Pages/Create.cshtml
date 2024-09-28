@@ -4,11 +4,29 @@
 @{
 }
 
-<form method="post">
-    <div asp-validation-summary="All"></div>
 
-    <input asp-for="Movie.Name" placeholder="Name" />
-    <input asp-for="Movie.Year" placeholder="Year"/>
+<div class="row">
+    <div class="col-xl-6 col-md-12">
+        <form asp-action="YourAction" method="post" class="needs-validation" novalidate>
+            <div asp-validation-summary="All" class="text-danger"></div>
 
-    <button type="submit">Submit</button>
-</form>
+            <div class="form-group">
+                <label asp-for="Movie.Name" class="control-label"></label>
+                <input asp-for="Movie.Name" class="form-control" placeholder="Name" />
+                <span asp-validation-for="Movie.Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Movie.Year" class="control-label"></label>
+                <input asp-for="Movie.Year" class="form-control" placeholder="Year" />
+                <span asp-validation-for="Movie.Year" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+@* @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+ *@
