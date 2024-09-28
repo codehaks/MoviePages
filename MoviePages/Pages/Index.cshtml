@@ -24,6 +24,7 @@ else
                 <th>#</th>
                 <th>Movie Name</th>
                 <th>Year</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,9 @@ else
                     <td>@i</td>
                     <td>@movie.Name</td>
                     <td>@movie.Year</td>
+                    <td>
+                        <a asp-page="edit" asp-route-id="@movie.Id"> Edit </a>
+                    </td>
                 </tr>
                 i++;
             }
