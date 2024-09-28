@@ -35,7 +35,8 @@ else
                     <td>@movie.Name</td>
                     <td>@movie.Year</td>
                     <td>
-                        <a asp-page="edit" asp-route-id="@movie.Id"> Edit </a>
+                        <a asp-page="edit" asp-route-id="@movie.Id" class="btn btn-info"> Edit </a>
+                        <a asp-page="delete" asp-route-id="@movie.Id" class="btn btn-danger"> Delete </a>
                     </td>
                 </tr>
                 i++;
