@@ -1,4 +1,5 @@
 ﻿@page
+
 @model MoviePages.Pages.IndexModel
 @{
     int i = 1;
@@ -8,6 +9,9 @@
 
 <h1>@message</h1>
 <hr />
+
+<a asp-page="create" class="btn btn-primary"> Movie</a>
+
 @if (Model.MovieList is null || Model.MovieList.Count == 0)
 {
     <p>No movies found.</p>
