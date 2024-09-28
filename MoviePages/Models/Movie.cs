@@ -2,6 +2,9 @@
 
 public class Movie
 {
+    public int Id { get; set; }
+
+
     [MinLength(3, ErrorMessage = "Name is Too short!")]
     [StringLength(10,ErrorMessage ="Name Too long!")]
     public required string Name { get; set; } // reference-type
