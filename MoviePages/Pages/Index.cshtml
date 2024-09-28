@@ -2,42 +2,30 @@
 @model MoviePages.Pages.IndexModel
 @{
     int i = 1;
-
     var message = "welcome!";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Movie Pages</title>
-</head>
-<body>
-    <h1>@message</h1>
 
-
-
-    @if (Model.MovieList is null || Model.MovieList.Count == 0)
+<h1>@message</h1>
+@if (Model.MovieList is null || Model.MovieList.Count == 0)
+{
+    <p>No movies found.</p>
+}
+else
+{
+    @foreach (var movie in (Model.MovieList ?? []))
     {
-        <p>No movies found.</p>
+        <p>
+            @i - @movie.Name (@movie.Year)
+        </p>
+
+        i++;
     }
-    else
-    {
-        @foreach (var movie in (Model.MovieList ?? []))
-        {
-            <p>
-                @i - @movie.Name (@movie.Year)
-            </p>
+}
+Totla Count: @(Model.MovieList?.Count ?? 0)
+<br />
+After 2000s: @CountAfter2000s()
 
-            i++;
-        }
-    }
-
-
-    Totla Count: @(Model.MovieList?.Count ?? 0)
-    <br />
-    After 2000s: @CountAfter2000s()
-</body>
-</html>
 
 @functions {
     public int CountAfter2000s()
