@@ -7,21 +7,37 @@
 
 
 <h1>@message</h1>
+<hr />
 @if (Model.MovieList is null || Model.MovieList.Count == 0)
 {
     <p>No movies found.</p>
 }
 else
 {
-    @foreach (var movie in (Model.MovieList ?? []))
-    {
-        <p>
-            @i - @movie.Name (@movie.Year)
-        </p>
-
-        i++;
-    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Movie Name</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in (Model.MovieList ?? new List<Movie>()))
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@movie.Name</td>
+                    <td>@movie.Year</td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
 }
+
+
+<hr />
 Total Count: @(Model.MovieList?.Count ?? 0)
 <br />
 After 2000s: @CountAfter2000s()
