@@ -1,4 +1,14 @@
 ﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model MoviePages.Pages.CreateModel
 @{
 }
+
+<form method="post">
+    <div asp-validation-summary="All"></div>
+
+    <input asp-for="Movie.Name" placeholder="Name" />
+    <input asp-for="Movie.Year" placeholder="Year"/>
+
+    <button type="submit">Submit</button>
+</form>

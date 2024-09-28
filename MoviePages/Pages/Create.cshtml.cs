@@ -5,8 +5,17 @@ namespace MoviePages.Pages
 {
     public class CreateModel : PageModel
     {
-        public void OnGet()
+        [BindProperty]
+        public Movie Movie { get; set; } = default!;
+        public IActionResult OnPost()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            return Page();
+            // Save movie db
         }
     }
 }
