@@ -15,9 +15,19 @@ namespace MoviePages.Pages
         }
 
         public IList<Movie>? MovieList { get; set; }
+
+        [BindProperty(SupportsGet =true)]
+        public string? SearchTerm { get; set; }
         public async Task<IActionResult> OnGet()
         {
-            MovieList = await _db.Movies.ToListAsync();
+            IQueryable<Movie> query = _db.Movies;
+
+            if (SearchTerm is not null)
+            {
+                query=query.Where(m=>m.Name.Contains(SearchTerm));
+            }
+
+            MovieList = await query.ToListAsync();
             return Page();
 
         }

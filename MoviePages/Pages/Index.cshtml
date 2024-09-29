@@ -9,6 +9,15 @@
 <h1>Movies</h1>
 <hr />
 
+<!-- Search Form -->
+<form method="get">
+    <div class="form-group">
+        <input type="text" name="SearchTerm" class="form-control" placeholder="Search by movie name" value="@Model.SearchTerm" />
+    </div>
+    <button type="submit" class="btn btn-secondary">Search</button>
+</form>
+
+<hr />
 <a asp-page="create" class="btn btn-primary">New Movie</a>
 
 @if (Model.MovieList is null || Model.MovieList.Count == 0)
