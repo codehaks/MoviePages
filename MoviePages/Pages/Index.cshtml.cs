@@ -31,6 +31,12 @@ namespace MoviePages.Pages
         [BindProperty(SupportsGet = true)]
         public int? MaxYear { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int PageNumber { get; set; } = 1; // Default page number
+
+        public int PageSize { get; set; } = 10; // Movies per page
+        public int TotalPages { get; set; }
+
         public async Task<IActionResult> OnGet()
         {
             IQueryable<Movie> query = _db.Movies;
@@ -39,7 +45,14 @@ namespace MoviePages.Pages
             query = ApplyYearRangeFilter(query);
             query = ApplySortOrder(query);
 
-            MovieList = await query.ToListAsync();
+            int totalMovies = await query.CountAsync();
+            TotalPages = (int)Math.Ceiling(totalMovies / (double)PageSize);
+
+            MovieList = await query
+                .Skip((PageNumber - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
+
             return Page();
 
         }

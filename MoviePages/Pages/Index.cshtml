@@ -58,7 +58,7 @@ else
                 <th>
 
                     <a asp-route-sortby="name"
-                        asp-route-sortorder="@newSortOrder"
+                       asp-route-sortorder="@newSortOrder"
                        asp-route-searchterm="@Model.SearchTerm"
                        asp-route-minyear="@Model.MinYear"
                        asp-route-maxyear="@Model.MaxYear">
@@ -78,7 +78,7 @@ else
                 </th>
                 <th>
                     <a asp-route-sortby="year"
-                        asp-route-sortorder="@newSortOrder"
+                       asp-route-sortorder="@newSortOrder"
                        asp-route-searchterm="@Model.SearchTerm"
                        asp-route-minyear="@Model.MinYear"
                        asp-route-maxyear="@Model.MaxYear">
@@ -118,6 +118,31 @@ else
     </table>
 }
 
+<hr />
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" asp-route-pagenumber="1">|<</a></li>
+
+        @for (int p = 1; p <= Model.TotalPages; p++)
+        {
+            <li class="page-item  @(p == Model.PageNumber ? "active" : "")">
+                <a class="page-link" 
+                asp-route-pagenumber="@p"
+                   asp-route-sortby="@Model.SortBy"
+                   asp-route-sortorder="@Model.SortOrder"
+                   asp-route-searchterm="@Model.SearchTerm"
+                   asp-route-minyear="@Model.MinYear"
+                   asp-route-maxyear="@Model.MaxYear">
+                    @p
+                </a>
+            </li>
+        }
+
+
+        <li class="page-item"><a class="page-link" asp-route-pagenumber="@Model.TotalPages">>|</a></li>
+    </ul>
+</nav>
 
 <hr />
 Total Count: @(Model.MovieList?.Count ?? 0)
