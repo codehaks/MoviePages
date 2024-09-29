@@ -18,6 +18,7 @@
 <!-- Search Form -->
 <form method="get" class="row g-2 align-items-center">
     <input asp-for="SortOrder" hidden />
+    <input asp-for="SortBy" hidden />
     <div class="col-auto">
         <input type="text" name="SearchTerm" class="form-control" placeholder="Search by movie name" value="@Model.SearchTerm" />
     </div>
@@ -30,10 +31,13 @@
         <input type="number" name="MaxYear" class="form-control" placeholder="Max Year" value="@Model.MaxYear" />
     </div>
 
-
-
     <div class="col-auto">
         <button type="submit" class="btn btn-secondary">Search</button>
+    </div>
+
+    <div class="col-auto">
+        <!-- Clear Filters Button -->
+        <a href="./Index" class="btn btn-light">Clear Filters</a>
     </div>
 </form>
 
