@@ -16,20 +16,87 @@ namespace MoviePages.Pages
 
         public IList<Movie>? MovieList { get; set; }
 
-        [BindProperty(SupportsGet =true)]
+        [BindProperty(SupportsGet = true)]
         public string? SearchTerm { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? SortBy { get; set; } = "year";
+
+        [BindProperty(SupportsGet = true)]
+        public string? SortOrder { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int? MinYear { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int? MaxYear { get; set; }
+
         public async Task<IActionResult> OnGet()
         {
             IQueryable<Movie> query = _db.Movies;
 
-            if (SearchTerm is not null)
-            {
-                query=query.Where(m=>m.Name.Contains(SearchTerm));
-            }
+            query = ApplySearch(query);
+            query = ApplyYearRangeFilter(query);
+            query = ApplySortOrder(query);
 
             MovieList = await query.ToListAsync();
             return Page();
 
+        }
+
+        private IQueryable<Movie> ApplySortOrder(IQueryable<Movie> query)
+        {
+            if (SortBy == "year")
+            {
+                if (SortOrder == "asc")
+                {
+                    query = query.OrderBy(m => m.Year);
+                }
+                else
+                          if (SortOrder == "desc")
+                {
+                    query = query.OrderByDescending(m => m.Year);
+                }
+            }
+            else if (SortBy == "name")
+            {
+                if (SortOrder == "asc")
+                {
+                    query = query.OrderBy(m => m.Name);
+                }
+                else
+                        if (SortOrder == "desc")
+                {
+                    query = query.OrderByDescending(m => m.Name);
+                }
+            }
+
+            return query;
+        }
+
+        private IQueryable<Movie> ApplyYearRangeFilter(IQueryable<Movie> query)
+        {
+            if (MinYear.HasValue)
+            {
+                query = query.Where(m => m.Year >= MinYear);
+            }
+
+            if (MaxYear.HasValue)
+            {
+                query = query.Where(m => m.Year <= MaxYear);
+            }
+
+            return query;
+        }
+
+        private IQueryable<Movie> ApplySearch(IQueryable<Movie> query)
+        {
+            if (SearchTerm is not null)
+            {
+                query = query.Where(m => m.Name.Contains(SearchTerm));
+            }
+
+            return query;
         }
     }
 }

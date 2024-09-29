@@ -3,6 +3,12 @@
 @model MoviePages.Pages.IndexModel
 @{
     int i = 1;
+
+    // Toggle sort order
+    string newSortOrder = Model.SortOrder == "asc" ? "desc" : "asc";
+
+    string nameSortOrder = Model.SortBy == "name" ? newSortOrder : "asc";
+    string yearSortOrder = Model.SortBy == "year" ? newSortOrder : "asc";
 }
 
 
@@ -10,12 +16,27 @@
 <hr />
 
 <!-- Search Form -->
-<form method="get">
-    <div class="form-group">
+<form method="get" class="row g-2 align-items-center">
+    <input asp-for="SortOrder" hidden />
+    <div class="col-auto">
         <input type="text" name="SearchTerm" class="form-control" placeholder="Search by movie name" value="@Model.SearchTerm" />
     </div>
-    <button type="submit" class="btn btn-secondary">Search</button>
+
+    <div class="col-auto">
+        <input type="number" name="MinYear" class="form-control" placeholder="Min Year" value="@Model.MinYear" />
+    </div>
+
+    <div class="col-auto">
+        <input type="number" name="MaxYear" class="form-control" placeholder="Max Year" value="@Model.MaxYear" />
+    </div>
+
+
+
+    <div class="col-auto">
+        <button type="submit" class="btn btn-secondary">Search</button>
+    </div>
 </form>
+
 
 <hr />
 <a asp-page="create" class="btn btn-primary">New Movie</a>
@@ -30,8 +51,48 @@ else
         <thead>
             <tr>
                 <th>#</th>
-                <th>Movie Name</th>
-                <th>Year</th>
+                <th>
+
+                    <a asp-route-sortby="name"
+                        asp-route-sortorder="@newSortOrder"
+                       asp-route-searchterm="@Model.SearchTerm"
+                       asp-route-minyear="@Model.MinYear"
+                       asp-route-maxyear="@Model.MaxYear">
+                        Movie Name
+                    </a>
+                    @if (Model.SortBy == "name")
+                    {
+                        @if (Model.SortOrder == "asc")
+                        {
+                            <span>&#9650;</span> <!-- Up arrow -->
+                        }
+                        else if (Model.SortOrder == "desc")
+                        {
+                            <span>&#9660;</span> <!-- Down arrow -->
+                        }
+                    }
+                </th>
+                <th>
+                    <a asp-route-sortby="year"
+                        asp-route-sortorder="@newSortOrder"
+                       asp-route-searchterm="@Model.SearchTerm"
+                       asp-route-minyear="@Model.MinYear"
+                       asp-route-maxyear="@Model.MaxYear">
+                        Year
+                    </a>
+                    @if (Model.SortBy == "year")
+                    {
+                        @if (Model.SortOrder == "asc")
+                        {
+                            <span>&#9650;</span> <!-- Up arrow -->
+                        }
+                        else if (Model.SortOrder == "desc")
+                        {
+                            <span>&#9660;</span> <!-- Down arrow -->
+                        }
+                    }
+
+                </th>
                 <th>Actions</th>
             </tr>
         </thead>
